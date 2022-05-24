@@ -2,3 +2,4 @@ Banana_Linux/
 .ipynb_checkpoints/
 unity-environment.log
 .idea/
+__pycache__/
