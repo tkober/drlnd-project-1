@@ -24,7 +24,7 @@ def save_agent(agent: Agent, path: str):
 
 def train_agent(agent: Agent, env: UnityEnvironment, parameters: DeepQLearningParameters, log_progress=100):
     episode_scores = []
-    moving_average = []
+    moving_avg= []
     avg_score_window = deque(maxlen=parameters.scores_window)
     epsilon = parameters.epsilon_start
 
@@ -53,7 +53,7 @@ def train_agent(agent: Agent, env: UnityEnvironment, parameters: DeepQLearningPa
         episode_scores.append(score)
         avg_score_window.append(score)
         avg_score = np.mean(avg_score_window)
-        moving_average.append(avg_score)
+        moving_avg.append(avg_score)
 
         if i_episode % log_progress == 0:
             progress = f'\rEpisode {i_episode}\tAvg Score:{avg_score:.2f}'
@@ -66,3 +66,5 @@ def train_agent(agent: Agent, env: UnityEnvironment, parameters: DeepQLearningPa
 
         # Update epsilon
         epsilon = max(parameters.epsilon_min, epsilon*parameters.epsilon_decay)
+
+    return episode_scores, moving_avg
