@@ -3,10 +3,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-class Network(nn.Module):
+class QNetwork(nn.Module):
 
     def __init__(self):
-        super(Network, self).__init__()
+        super(QNetwork, self).__init__()
         # TODO: Implement
 
     def forward(self, state):
