@@ -24,7 +24,7 @@ def save_agent(agent: Agent, path: str):
 
 def train_agent(agent: Agent, env: UnityEnvironment, parameters: DeepQLearningParameters, log_progress=100):
     episode_scores = []
-    moving_avg= []
+    moving_avg = []
     avg_score_window = deque(maxlen=parameters.scores_window)
     epsilon = parameters.epsilon_start
 
@@ -60,7 +60,7 @@ def train_agent(agent: Agent, env: UnityEnvironment, parameters: DeepQLearningPa
             print(progress)
 
         # Check if goal score has been reached
-        if avg_score >= parameters.goal_score:
+        if parameters.stop_on_goal_reached and avg_score >= parameters.goal_score:
             print(f'\n\nGoal reached at episode {i_episode}\tAvg Score:{avg_score:.2f}')
             break
 
