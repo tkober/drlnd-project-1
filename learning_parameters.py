@@ -17,3 +17,4 @@ class DeepQLearningParameters:
     tau: float                  # For soft updating target parameters
     learning_rate: float        # Learning rate for the optimizer
     update_interval: int        # How often the network shall be updated
+    double_dqn: bool            # Set to True if the agent should perform Double Q-Learning
