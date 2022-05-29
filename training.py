@@ -3,26 +3,14 @@ import torch
 from collections import deque
 from unityagents import UnityEnvironment
 from agent import Agent
-from dataclasses import dataclass
-
-
-@dataclass()
-class DeepQLearningParameters:
-    max_episodes: int           # Maximum number of episodes to train
-    scores_window: int          # Number of episodes scores that shall be considered for avg calculation
-    goal_score: float           # Goal of the average of scores in the scores window
-    stop_on_goal_reached: bool  # Set if you want training to be stopped if the goal score is reached
-    max_t: int                  # Maximum number of steps per episode
-    epsilon_start: float        # Start value of epsilon
-    epsilon_decay: float        # Decay of epsilon per episode
-    epsilon_min: float          # Minimum value of epsilon
+from learning_parameters import DeepQLearningParameters
 
 
 def save_agent(agent: Agent, path: str):
     torch.save(agent.qnetwork_local.state_dict(), path)
 
 
-def train_agent(agent: Agent, env: UnityEnvironment, parameters: DeepQLearningParameters, log_progress=100):
+def train_agent(agent: Agent, env: UnityEnvironment, parameters: DeepQLearningParameters, log=True, log_progress=100):
     episode_scores = []
     moving_avg = []
     avg_score_window = deque(maxlen=parameters.scores_window)
@@ -55,12 +43,12 @@ def train_agent(agent: Agent, env: UnityEnvironment, parameters: DeepQLearningPa
         avg_score = np.mean(avg_score_window)
         moving_avg.append(avg_score)
 
-        if i_episode % log_progress == 0:
-            progress = f'\rEpisode {i_episode}\tAvg Score:{avg_score:.2f}'
+        if log and i_episode % log_progress == 0:
+            progress = f'\rEpisode {i_episode:>6}\tAvg Score:{avg_score:.2f}'
             print(progress)
 
         # Check if goal score has been reached
-        if parameters.stop_on_goal_reached and avg_score >= parameters.goal_score:
+        if log and parameters.stop_on_goal_reached and avg_score >= parameters.goal_score:
             print(f'\n\nGoal reached at episode {i_episode}\tAvg Score:{avg_score:.2f}')
             break
 
