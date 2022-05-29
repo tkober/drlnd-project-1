@@ -32,6 +32,6 @@ class QNetwork(nn.Module):
         x = F.relu(self.fc2(x))
 
         if self.duelling_network:
-            return self.fc3(x) + self.state_value
+            return self.fc3(x) + self.state_value(x)
         else:
             return self.fc3(x)
