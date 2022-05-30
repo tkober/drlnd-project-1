@@ -6,8 +6,12 @@ from agent import Agent
 from learning_parameters import DeepQLearningParameters
 
 
-def save_agent(agent: Agent, path: str):
+def save_agent_network(agent: Agent, path: str):
     torch.save(agent.qnetwork_local.state_dict(), path)
+
+
+def load_agent_network(agent: Agent, path: str):
+    agent.qnetwork_local.load_state_dict(torch.load(path))
 
 
 def train_agent(agent: Agent, env: UnityEnvironment, parameters: DeepQLearningParameters, log=True, log_progress=100):
